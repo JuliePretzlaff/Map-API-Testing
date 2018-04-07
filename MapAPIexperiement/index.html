@@ -12,10 +12,10 @@
 
 <script type="text/javascript">
     //js arrays made from razor
-    var latArray = [];
-    var longArray = [];
-    var parkArray = [];
-    var descArray = [];
+    //var latArray = [];
+    //var longArray = [];
+    //var parkArray = [];
+    //var descArray = [];
 
     @foreach(var d in Model)
     {
@@ -63,14 +63,7 @@
                 title: parkArray[i],
                 //icon: 'images/treeicon.png',
             });
-            //info box & content
-            //google.maps.event.addListener(marker, 'click', function () {
-            //    this.info.open(map, marker);
-            //});
-            //marker.info = new google.maps.InfoWindow({
-            //    content: (i + 1) + ". " + parkArray[i] + ": " + descArray[i]
 
-            //});
             (function (marker, i) {
                 // add click event
                 google.maps.event.addListener(marker, 'click', function () {
@@ -91,3 +84,4 @@
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0NV4Ogr4ug_24trb2h5LEeeY_nD8xeH0&callback=initMap">
 </script>
+

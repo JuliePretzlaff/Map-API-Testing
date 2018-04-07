@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Geocoding service</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+         /* Always set the map height explicitly to define the size of the div
+        * element that contains the map. */
+         #map {
+             height: 100%;
+         }
+         /* Optional: Makes the sample page fill the window. */
+         html, body {
+             height: 100%;
+             margin: 0;
+             padding: 0;
+         }
+
+         #floating-panel {
+             position: absolute;
+             top: 10px;
+             left: 25%;
+             z-index: 5;
+             background-color: #fff;
+             padding: 5px;
+             border: 1px solid #999;
+             text-align: center;
+             font-family: 'Roboto','sans-serif';
+             line-height: 30px;
+             padding-left: 10px;
+         }
+    </style>
+</head>
+<body>
+    <div id="floating-panel">
+        <input id="address" type="textbox" value="Bozeman, MT">
+        <input id="submit" type="button" value="Geocode">
+    </div>
+    <div id="map"></div>
+    <script>
+        var latArray = [41.373552, 41.375517];
+        var longArray = [-81.545254, -81.575270];
+        var parkArray = ['egbert', 'hemlock'];
+
+
+    </script>
+    <script>
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 8,
+                center: { lat: 45.676007, lng: -111.045754 }
+            });
+            var geocoder = new google.maps.Geocoder();
+
+            document.getElementById('submit').addEventListener('click', function () {
+                geocodeAddress(geocoder, map);
+            });
+        }
+        var marker, i;
+        var infowindow = new google.maps.InfoWindow();
+
+        function geocodeAddress(geocoder, resultsMap) {
+            var address = document.getElementById('address').value;
+            geocoder.geocode({ 'address': address }, function (results, status) {
+                if (status === 'OK') {
+                    resultsMap.setCenter(results[0].geometry.location);
+                    marker = new google.maps.Marker({
+                        map: resultsMap,
+                        position: results[0].geometry.location
+                    });
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+                //creating needed variables
+            });
+                //dropping pin in certain position:
+
+           //test marker
+            marker = new google.maps.Marker({
+                position: { lat: parseFloat(latArray[1]), lng: parseFloat(longArray[1]) },
+                map: map,
+                title: parkArray[1],
+                //icon: 'images/treeicon.png',
+            });
+
+                for (i = 0; i < latArray.length; i++) {
+                    alert(latArray[i]);
+                    marker = new google.maps.Marker({
+                        position: { lat: parseFloat(latArray[i]), lng: parseFloat(longArray[i]) },
+                        map: map,
+                        title: parkArray[i],
+                        //icon: 'images/treeicon.png',
+                    });
+                    //info box & content
+
+                    (function (marker, i) {
+                        // add click event
+
+                        google.maps.event.addListener(marker, 'click', function () {
+                            infowindow.setContent((i + 1) + ". " + parkArray[i] + ": " + descArray[i]);
+
+
+                            infowindow.open(map, marker);
+                        });
+                    })(marker, i);
+                }
+
+
+
+
+
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0NV4Ogr4ug_24trb2h5LEeeY_nD8xeH0&callback=initMap">
+    </script>
+</body>
+</html>
