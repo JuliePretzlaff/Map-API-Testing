@@ -48,7 +48,7 @@
     <script>
         function initMap() {
             var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 8,
+                zoom:  12,
                 center: { lat: 45.676007, lng: -111.045754 }
             });
             var geocoder = new google.maps.Geocoder();
@@ -58,59 +58,40 @@
             });
         }
         var marker, i;
-        var infowindow = new google.maps.InfoWindow();
+        
 
         function geocodeAddress(geocoder, resultsMap) {
             var address = document.getElementById('address').value;
             geocoder.geocode({ 'address': address }, function (results, status) {
+                var infowindow = new google.maps.InfoWindow();
                 if (status === 'OK') {
                     resultsMap.setCenter(results[0].geometry.location);
-                    //marker = new google.maps.Marker({
-                    //    map: resultsMap,
-                    //    position: results[0].geometry.location
-                    //});
-                    //marker = new google.maps.Marker({
-                    //    position: { lat: parseFloat(latArray[1]), lng: parseFloat(longArray[1]) },
-                    //    map: resultsMap,
-                    //    title: parkArray[1],
-                    //    //icon: 'images/treeicon.png',
-                    //});     
+                    //for loop to add pins from DB
                     for (i = 0; i < latArray.length; i++) {
-                    alert(latArray[i]);
-                    marker = new google.maps.Marker({
-                        position: { lat: parseFloat(latArray[i]), lng: parseFloat(longArray[i]) },
-                        map: resultsMap,
-                        title: parkArray[i],
-                        //icon: 'images/treeicon.png',
-                    });
-                    (function (marker, i) {
-                        // add click event
-
-                        google.maps.event.addListener(marker, 'click', function () {
-                            infowindow.setContent((i + 1) + ". " + parkArray[i] + ": " + descArray[i]);
-
-
-                            infowindow.open(map, marker);
+                        marker = new google.maps.Marker({
+                            position: { lat: parseFloat(latArray[i]), lng: parseFloat(longArray[i]) },
+                            map: resultsMap,
+                            title: parkArray[i],
+                            animation: google.maps.Animation.DROP,
+                            //icon: 'images/treeicon.png',
+                            
                         });
-                    })(marker, i);
+                        //need to get this to work:
+                        (function (marker, i) {
+                            google.maps.event.addListener(marker, 'click', function () {
+                                infowindow.setContent((i + 1) + ". ");
+                                infowindow.open(resultsMap, marker);
+                            });
+                        })(marker, i);
+                    }
+                
                 }
-                } else {
+                else {
                     alert('Geocode was not successful for the following reason: ' + status);
                 }
-                //creating needed variables
+              
             });
-                //dropping pin in certain position:
-
-      
-
-                    //info box & content
-
-                
-
-
-
-
-
+               
         }
     </script>
     <script async defer
