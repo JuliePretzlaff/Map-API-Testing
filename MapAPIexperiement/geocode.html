@@ -65,35 +65,24 @@
             geocoder.geocode({ 'address': address }, function (results, status) {
                 if (status === 'OK') {
                     resultsMap.setCenter(results[0].geometry.location);
-                    marker = new google.maps.Marker({
-                        map: resultsMap,
-                        position: results[0].geometry.location
-                    });
-                } else {
-                    alert('Geocode was not successful for the following reason: ' + status);
-                }
-                //creating needed variables
-            });
-                //dropping pin in certain position:
-
-           //test marker
-            marker = new google.maps.Marker({
-                position: { lat: parseFloat(latArray[1]), lng: parseFloat(longArray[1]) },
-                map: map,
-                title: parkArray[1],
-                //icon: 'images/treeicon.png',
-            });
-
-                for (i = 0; i < latArray.length; i++) {
+                    //marker = new google.maps.Marker({
+                    //    map: resultsMap,
+                    //    position: results[0].geometry.location
+                    //});
+                    //marker = new google.maps.Marker({
+                    //    position: { lat: parseFloat(latArray[1]), lng: parseFloat(longArray[1]) },
+                    //    map: resultsMap,
+                    //    title: parkArray[1],
+                    //    //icon: 'images/treeicon.png',
+                    //});     
+                    for (i = 0; i < latArray.length; i++) {
                     alert(latArray[i]);
                     marker = new google.maps.Marker({
                         position: { lat: parseFloat(latArray[i]), lng: parseFloat(longArray[i]) },
-                        map: map,
+                        map: resultsMap,
                         title: parkArray[i],
                         //icon: 'images/treeicon.png',
                     });
-                    //info box & content
-
                     (function (marker, i) {
                         // add click event
 
@@ -105,6 +94,18 @@
                         });
                     })(marker, i);
                 }
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+                //creating needed variables
+            });
+                //dropping pin in certain position:
+
+      
+
+                    //info box & content
+
+                
 
 
 
